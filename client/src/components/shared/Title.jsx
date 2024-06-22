@@ -1,16 +1,16 @@
-import React from 'react'
-import {Helmet} from 'react-helmet-async';
+import React from "react";
+import { Helmet } from "react-helmet-async";
 
 const Title = ({
-    title = "Chat App",
-    description = "Chat with your friends"
+  title = "Chat App",
+  description = "this is the Chat App called CommuniHub",
 }) => {
   return (
     <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
     </Helmet>
-  )
-}
+  );
+};
 
 export default Title;
