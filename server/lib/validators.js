@@ -2,6 +2,7 @@ import { body, param, validationResult } from "express-validator";
 import { ErrorHandler } from "../utils/utility.js";
 
 const validateHandler = (req, res, next) => {
+  console.log("entered validator")
   const errors = validationResult(req);
 
   const errorMessages = errors
@@ -9,8 +10,9 @@ const validateHandler = (req, res, next) => {
     .map((error) => error.msg)
     .join(", ");
 
-  if (errors.isEmpty()) return next();
-  else next(new ErrorHandler(errorMessages, 400));
+
+  if (errors.isEmpty()) {console.log("exiting validator"); return next();}
+  else {console.log(errorMessages);next(new ErrorHandler(errorMessages, 400));}
 };
 
 const registerValidator = () => [

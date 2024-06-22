@@ -14,7 +14,10 @@ const cookieOptions = {
 const connectDB = (uri) => {
   mongoose
     .connect(uri, { dbName: "CommuniHub" })
-    .then((data) => { console.log(`Connected to DB: ${data.connection.host}`); console.log("MONGODB CONNECTED"); })
+    .then((data) => {
+      console.log(`Connected to DB: ${data.connection.host}`);
+      console.log("MONGODB CONNECTED");
+    })
     .catch((err) => {
       throw err;
     });
@@ -67,7 +70,15 @@ const uploadFilesToCloudinary = async (files = []) => {
 };
 
 const deletFilesFromCloudinary = async (public_ids) => {
-  // Delete files from cloudinary
+  const deletePromises = public_ids.map((public_id) =>
+    cloudinary.uploader.destroy(public_id, { resource_type: 'auto' })
+  );
+
+  try {
+    await Promise.all(deletePromises);
+  } catch (err) {
+    throw new Error("Error deleting files from cloudinary", err);
+  }
 };
 
 export {

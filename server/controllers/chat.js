@@ -215,6 +215,7 @@ const leaveGroup = TryCatch(async (req, res, next) => {
 });
 
 const sendAttachments = TryCatch(async (req, res, next) => {
+  console.log("attachments entered")
   const { chatId } = req.body;
 
   const files = req.files || [];
@@ -236,7 +237,12 @@ const sendAttachments = TryCatch(async (req, res, next) => {
     return next(new ErrorHandler("Please provide attachments", 400));
 
   //   Upload files here
-  const attachments = await uploadFilesToCloudinary(files);
+  var attachments=[];
+  try {
+    attachments = await uploadFilesToCloudinary(files);
+  } catch (error) {
+    console.log(error.message)
+  } 
 
   const messageForDB = {
     content: "",
@@ -345,7 +351,7 @@ const deleteChat = TryCatch(async (req, res, next) => {
     );
   }
 
-  //   Here we have to dete All Messages as well as attachments or files from cloudinary
+  //   Here we have to delete All Messages as well as attachments or files from cloudinary
 
   const messagesWithAttachments = await Message.find({
     chat: chatId,
