@@ -15,12 +15,14 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { VisuallyHiddenInput } from "../components/styles/StyledComponents";
-import { bgGradient } from "../constants/color";
+import { bgGradient, grayColor } from "../constants/color";
 import { server } from "../constants/config";
 import { userExists } from "../redux/reducers/auth";
 import { usernameValidator } from "../utils/validators";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -111,11 +113,7 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: bgGradient,
-      }}
-    >
+    <div style={{ backgroundColor: grayColor }}>
       <Container
         component="main"
         maxWidth="xs"
@@ -135,7 +133,7 @@ const Login = () => {
             alignItems: "center",
             "&:hover": {
               transform: "scale(1.09)",
-              transition: "transform 0.9s ease-in-out",
+              transition: "transform 1.4s",
               boxShadow: "18px 10px 10px black",
             },
           }}
@@ -179,7 +177,7 @@ const Login = () => {
                   color="primary"
                   type="submit"
                   fullWidth
-                  disabled={isLoading}
+                  // disabled={isLoading}
                 >
                   Login
                 </Button>
@@ -191,10 +189,21 @@ const Login = () => {
                 <Button
                   disabled={isLoading}
                   fullWidth
-                  variant="text"
+                  variant="contained"
+                  color="secondary"
                   onClick={toggleLogin}
                 >
                   Sign Up Instead
+                </Button>
+                <div style={{height:"1rem"}}/>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  m="1rem"
+                  fullWidth
+                  onClick={() => navigate("/admin")}
+                >
+                  Login As Admin
                 </Button>
               </form>
             </>
@@ -319,7 +328,8 @@ const Login = () => {
                 <Button
                   disabled={isLoading}
                   fullWidth
-                  variant="text"
+                  variant="contained"
+                  color="info"
                   onClick={toggleLogin}
                 >
                   Login Instead

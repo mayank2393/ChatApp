@@ -94,6 +94,8 @@ const Header = () => {
                 textAlign: "center",
                 margin: "auto",
               }}
+              onClick={() => navigate("/")}
+              style={{ cursor: "pointer" }}
             >
               CommuniHub
             </Typography>

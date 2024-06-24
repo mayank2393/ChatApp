@@ -24,7 +24,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { LayoutLoader } from "../components/layout/Loaders";
 import AvatarCard from "../components/shared/AvatarCard";
 import { Link } from "../components/styles/StyledComponents";
-import { bgGradient, grayColor, matBlack } from "../constants/color";
+import { bgGradient, grayColor, matBlack, redLight } from "../constants/color";
 import { useDispatch, useSelector } from "react-redux";
 import UserItem from "../components/shared/UserItem";
 import { useAsyncMutation, useErrors } from "../hooks/hook";
@@ -124,6 +124,7 @@ const Groups = () => {
       chatId,
       name: groupNameUpdatedValue,
     });
+    setGroupNameUpdatedValue("");
   };
 
   const openConfirmDeleteHandler = () => {
@@ -149,16 +150,9 @@ const Groups = () => {
   };
 
   useEffect(() => {
-    if (chatId) {
-      setGroupName(`Group Name ${chatId}`);
-      setGroupNameUpdatedValue(`Group Name ${chatId}`);
-    }
-
-    return () => {
-      setGroupName("");
-      setGroupNameUpdatedValue("");
-      setIsEdit(false);
-    };
+    setGroupName("");
+    setGroupNameUpdatedValue("");
+    setIsEdit(false);
   }, [chatId]);
 
   const IconBtns = (
@@ -205,11 +199,14 @@ const Groups = () => {
       alignItems={"center"}
       justifyContent={"center"}
       spacing={"1rem"}
-      padding={"3rem"}
+      padding={"1rem"}
     >
       {isEdit ? (
         <>
           <TextField
+            variant="outlined"
+            label="Enter Updated Group Name"
+            sx={{ width: "20rem" }}
             value={groupNameUpdatedValue}
             onChange={(e) => setGroupNameUpdatedValue(e.target.value)}
           />
@@ -238,11 +235,12 @@ const Groups = () => {
         sm: "row",
       }}
       spacing={"1rem"}
-      p={{
+      padding={{
         xs: "0",
         sm: "1rem",
         md: "1rem 4rem",
       }}
+      margin={"1rem"}
     >
       <Button
         size="large"
@@ -266,7 +264,7 @@ const Groups = () => {
   return myGroups.isLoading ? (
     <LayoutLoader />
   ) : (
-    <Grid container height={"100vh"}>
+    <Grid container height={"92vh"} overflow={"hidden"}>
       <Grid
         item
         sx={{
@@ -300,8 +298,13 @@ const Groups = () => {
             {GroupName}
 
             <Typography
-              margin={"2rem"}
-              alignSelf={"flex-start"}
+              margin={"1rem"}
+              textAlign={"center"}
+              fontFamily={"sans-serif"}
+              fontWeight={"600"}
+              fontSize={"3rem"}
+              letterSpacing={"3px"}
+              textTransform={"capitalize"}
               variant="body1"
             >
               Members
@@ -311,14 +314,20 @@ const Groups = () => {
               maxWidth={"45rem"}
               width={"100%"}
               boxSizing={"border-box"}
+              border={`5px solid ${matBlack}`}
               padding={{
                 sm: "1rem",
                 xs: "0",
                 md: "1rem 4rem",
               }}
               spacing={"2rem"}
-              height={"50vh"}
+              height={"55vh"}
               overflow={"auto"}
+              zIndex={10}
+              bgcolor={"#8a8a8a"}
+              borderRadius={"2rem"}
+              boxShadow={"3px 10px 10px black"}
+              flexGrow={1} // Added this line to ensure stack grows
             >
               {/* Members */}
 
@@ -332,6 +341,7 @@ const Groups = () => {
                     isAdded
                     styling={{
                       boxShadow: "0 0 0.5rem  rgba(0,0,0,0.2)",
+                      backgroundColor: "white",
                       padding: "1rem 2rem",
                       borderRadius: "1rem",
                     }}
@@ -341,7 +351,7 @@ const Groups = () => {
               )}
             </Stack>
 
-            {ButtonGroup}
+            {ButtonGroup }
           </>
         )}
       </Grid>
@@ -373,7 +383,7 @@ const Groups = () => {
         onClose={handleMobileClose}
       >
         <GroupsList
-          w={"50vw"}
+          w={"60vw"}
           myGroups={myGroups?.data?.groups}
           chatId={chatId}
         />
@@ -385,10 +395,10 @@ const Groups = () => {
 const GroupsList = ({ w = "100%", myGroups = [], chatId }) => (
   <Stack
     width={w}
+    borderRight={`3px solid ${matBlack}`}
+    minHeight={"100%"} // Changed to 100% to allow for content to grow
     sx={{
-      backgroundImage: bgGradient,
-      height: "100vh",
-      overflow: "auto",
+      backgroundColor: "#8a8a8a",
     }}
   >
     {myGroups.length > 0 ? (
@@ -396,8 +406,22 @@ const GroupsList = ({ w = "100%", myGroups = [], chatId }) => (
         <GroupListItem group={group} chatId={chatId} key={group._id} />
       ))
     ) : (
-      <Stack alignItems={"center"} direction={"row"} justifyItems={"center"} height={"100%"}>
-        <Typography textAlign={"center"} fontWeight={"600"} fontFamily={"sans-serif"} width={"100%"} fontSize={"3rem"} padding="1rem" letterSpacing={"3px"} textTransform={"capitalize"}>
+      <Stack
+        alignItems={"center"}
+        direction={"row"}
+        justifyItems={"center"}
+        height={"100%"}
+      >
+        <Typography
+          textAlign={"center"}
+          fontWeight={"600"}
+          fontFamily={"sans-serif"}
+          width={"100%"}
+          fontSize={"3rem"}
+          padding="1rem"
+          letterSpacing={"3px"}
+          textTransform={"capitalize"}
+        >
           No groups
         </Typography>
       </Stack>
@@ -417,7 +441,16 @@ const GroupListItem = memo(({ group, chatId }) => {
     >
       <Stack direction={"row"} spacing={"1rem"} alignItems={"center"}>
         <AvatarCard avatar={avatar} />
-        <Typography>{name}</Typography>
+        <Typography
+          fontFamily={"sans-serif"}
+          fontSize={"1.5rem"}
+          color={"white"}
+          textTransform={"capitalize"}
+          fontWeight={"400"}
+          letterSpacing={"2px"}
+        >
+          {name}
+        </Typography>
       </Stack>
     </Link>
   );

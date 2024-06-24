@@ -8,7 +8,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAsyncMutation } from "../../hooks/hook";
 import {
@@ -72,11 +72,11 @@ const Search = () => {
         />
    
         <List>
-          {users.map((i) => (
+          {users.map((i,index) => (
             i._id !== user._id && (
             <UserItem
               user={i}
-              key={i._id}
+              key={index}
               handler={addFriendHandler}
               handlerIsLoading={isLoadingSendFriendRequest}
             />
@@ -88,4 +88,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default memo(Search);

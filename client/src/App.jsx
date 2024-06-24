@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { userExists, userNotExists } from "./redux/reducers/auth";
 import { Toaster } from "react-hot-toast";
 import { SocketProvider } from "./socket";
+import Header from "./components/layout/Header";
+import Title from "./components/shared/Title";
+import './app.css';
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -39,6 +42,15 @@ const App = () => {
     <LayoutLoader />
   ) : (
     <BrowserRouter>
+      {
+        // Title and Header components are used in all routes except the login route
+        user && (
+          <>
+            <Title />
+            <Header />
+          </>
+        )
+      }
       <Suspense fallback={<LayoutLoader />}>
         <Routes>
           <Route

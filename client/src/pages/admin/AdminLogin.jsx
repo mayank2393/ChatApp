@@ -8,11 +8,12 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { bgGradient } from "../../constants/color";
 import { adminLogin, getAdmin } from "../../redux/thunks/admin";
 
 const AdminLogin = () => {
+  const Navigate = useNavigate();
   const { isAdmin } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -84,6 +85,18 @@ const AdminLogin = () => {
               fullWidth
             >
               Login
+            </Button>
+            <Button
+              sx={{
+                marginTop: "1rem",
+              }}
+              variant="inherit"
+              color="primary"
+              type="submit"
+              fullWidth
+              onClick={()=>Navigate("/")}
+            >
+              Go Back
             </Button>
           </form>
         </Paper>

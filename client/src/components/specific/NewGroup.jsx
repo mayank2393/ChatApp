@@ -77,20 +77,22 @@ const NewGroup = () => {
           value={groupName.value}
           onChange={groupName.changeHandler}
         />
-        <Typography variant="body1">Members</Typography>
         <Stack>
           {isLoading ? (
             <Skeleton />
-          ) : (
-            data?.friends?.map((i) => (
-              <UserItem
-                user={i}
-                key={i._id}
-                handler={selectMemberHandler}
-                isAdded={selectedMembers.includes(i._id)}
-              />
-            ))
-          )}
+          ) : data?.friends>0 ? (
+            <>
+              <Typography variant="body1">Members</Typography>
+              {data?.friends?.map((i) => (
+                <UserItem
+                  user={i}
+                  key={i._id}
+                  handler={selectMemberHandler}
+                  isAdded={selectedMembers.includes(i._id)}
+                />
+              ))}
+            </>
+          ) : <Typography variant="body1">No Friends Available</Typography>}
         </Stack>
         <Stack direction={"row"} justifyContent={"space-evenly"}>
           <Button
@@ -98,7 +100,7 @@ const NewGroup = () => {
             color="error"
             size="large"
             onClick={closeHandler}
-          >
+            >
             Cancel
           </Button>
           <Button
@@ -106,13 +108,13 @@ const NewGroup = () => {
             size="large"
             onClick={submitHandler}
             disabled={isLoadingNewGroup}
-          >
+            >
             Create
           </Button>
         </Stack>
       </Stack>
-    </Dialog>
-  );
+      </Dialog>
+    );
 };
 
 export default NewGroup;
