@@ -13,7 +13,7 @@ import { bgGradient } from "../../constants/color";
 import { adminLogin, getAdmin } from "../../redux/thunks/admin";
 
 const AdminLogin = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const { isAdmin } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -94,7 +94,7 @@ const AdminLogin = () => {
               color="primary"
               type="submit"
               fullWidth
-              onClick={()=>Navigate("/")}
+              onClick={()=>navigate("/")}
             >
               Go Back
             </Button>
