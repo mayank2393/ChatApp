@@ -74,7 +74,9 @@ const AdminLogin = () => {
               value={secretKey.value}
               onChange={secretKey.changeHandler}
             />
-
+            <Typography variant="caption" color="error">
+              key : admin$ecretkey (use this to login)
+            </Typography>
             <Button
               sx={{
                 marginTop: "1rem",
@@ -94,7 +96,7 @@ const AdminLogin = () => {
               color="primary"
               type="submit"
               fullWidth
-              onClick={()=>navigate("/")}
+              onClick={() => navigate("/")}
             >
               Go Back
             </Button>
